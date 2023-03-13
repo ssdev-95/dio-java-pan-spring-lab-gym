@@ -13,7 +13,7 @@ public interface IPhysicalAvaliationService {
 
 	List<PhysicalAvaliation> getAll();
 
-	PhysicalAvaliation update(PhysicalAvaliationUpdateForm form);
+	PhysicalAvaliation update(Long id, PhysicalAvaliationUpdateForm form);
 
 	void delete(Long id);
 }
