@@ -25,7 +25,7 @@ public class PhysicalAvaliation {
 	private Double weight;
 	private Double height;
 	@Column(name = "avaliation_date")
-	private LocalDateTime avaliationDate;
+	private LocalDateTime avaliationDate = LocalDateTime.now();
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_id", referencedColumnName = "id")
 	private Student student;
