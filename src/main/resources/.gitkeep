@@ -1,0 +1,10 @@
+# sample code for configure jpa in application.yml file
+spring:
+  datasource:
+    url: example
+    username: example
+    password: example
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
