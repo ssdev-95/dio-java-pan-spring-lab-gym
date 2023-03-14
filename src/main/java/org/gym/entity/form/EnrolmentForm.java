@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnrolmentForm {
-
   @NotNull(message = "Cannot send empty fields: studentId.")
   @Positive(message = "The student Id must be positive.")
   private Long studentId;
