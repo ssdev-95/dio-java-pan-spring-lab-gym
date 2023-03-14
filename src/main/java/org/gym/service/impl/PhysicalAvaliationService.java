@@ -47,7 +47,14 @@ public class PhysicalAvaliationService
 
 	@Override
 	public PhysicalAvaliation update(
-		Long id, PhysicalAvaliationUpdateForm form) { return null; }
+			Long id, PhysicalAvaliationUpdateForm form) {
+		PhysicalAvaliation avaliation = repository
+			.findById(id).get();
+		avaliation.setId(id);
+		avaliation.setWeight(form.getWeight());
+		avaliation.setHeight(form.getHeight());
+		return repository.save(avaliation);
+	}
 
 	@Override
 	public void delete(Long id) {

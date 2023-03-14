@@ -11,8 +11,6 @@ import org.gym.service.IStudentService;
 
 import org.springframework.stereotype.Service;
 
-import net.bytebuddy.matcher.SubTypeMatcher;
-
 @Service
 public class StudentService implements IStudentService {
 	private final StudentsRepository repository;
@@ -48,7 +46,12 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public Student update(Long id, StudentUpdateForm form) {
-		return null;
+		Student student = repository.findById(id).get();
+		student.setId(id);
+		student.setName(form.getName());
+		student.setBirthDate(form.getBirthDate());
+		student.setNeighborhood(form.getNeighborhood());
+		return repository.saveAndFlush(student);
 	}
 
 	@Override

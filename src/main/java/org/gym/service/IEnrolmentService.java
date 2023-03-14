@@ -10,7 +10,7 @@ public interface IEnrolmentService {
 
 	Enrolment get(Long id);
 
-	List<Enrolment> getAll(String neighborhood);
+	List<Enrolment> getAll(String neighbor);
 
 	void delete(Long id);
 }
