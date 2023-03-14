@@ -40,8 +40,10 @@ public class StudentService implements IStudentService {
 	}
 
 	@Override
-	public List<PhysicalAvaliation> getAllAvaliationById(Long id) {
-		return null;
+	public List<PhysicalAvaliation> getAllAvaliationByStudentId(
+			Long id) {
+		Student student = repository.findById(id).get();
+		return student.getAvaliations();
 	}
 
 	@Override

@@ -18,5 +18,5 @@ public interface IStudentService {
 
 	void delete(Long id);
 
-	List<PhysicalAvaliation> getAllAvaliationById(Long id);
+	List<PhysicalAvaliation> getAllAvaliationByStudentId(Long id);
 }

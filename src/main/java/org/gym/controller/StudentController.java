@@ -2,6 +2,7 @@ package org.gym.controller;
 
 import java.util.List;
 
+import org.gym.entity.PhysicalAvaliation;
 import org.gym.entity.Student;
 import org.gym.entity.form.StudentCreateForm;
 import org.gym.entity.form.StudentUpdateForm;
@@ -37,6 +38,12 @@ public class StudentController {
 	@GetMapping("/{id}")
 	public Student get(@RequestParam Long id) {
 		return service.get(id);
+	}
+
+	@GetMapping("/{id}/avaliations")
+	public List<PhysicalAvaliation> getAllAvaliationByStudentId(
+			@RequestParam Long id) {
+		return service.getAllAvaliationByStudentId(id);
 	}
 
 	@PatchMapping()
