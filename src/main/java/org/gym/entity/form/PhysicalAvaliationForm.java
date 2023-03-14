@@ -5,15 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PhysicalAvaliationForm {
   //@Positive(message = "O Id do aluno precisa ser positivo.")
   private Long studentId;
 
   //@NotNull(message = "Preencha o campo corretamente.")
   //@Positive(message = "${validatedValue}' precisa ser positivo.")
-  private double wight;
+  private double weight;
 
   //@NotNull(message = "Preencha o campo corretamente.")
   //@Positive(message = "${validatedValue}' precisa ser positivo.")

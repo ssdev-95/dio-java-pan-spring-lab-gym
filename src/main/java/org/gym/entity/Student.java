@@ -18,11 +18,12 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Data @ToString(exclude = {"id"})
-@NoArgsConstructor @AllArgsConstructor
-@Entity @Table(name = "tb_students")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_students")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Student {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

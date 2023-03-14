@@ -14,11 +14,12 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Data @ToString(exclude = {"id"})
-@AllArgsConstructor @NoArgsConstructor
-@Entity @Table(name = "tb_enrolments")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_enrolments")
 public class Enrolment {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

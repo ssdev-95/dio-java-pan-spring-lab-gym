@@ -11,8 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class StudentCreateForm {
 	@NotEmpty(message = "Cannot send empty fields: name")
 	@Size(min = 3, max =50, message = "'${validatedValue}' must be between {min} and {max} characteres.")
