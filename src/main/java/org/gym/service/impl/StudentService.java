@@ -6,6 +6,7 @@ import org.gym.entity.PhysicalAvaliation;
 import org.gym.entity.Student;
 import org.gym.entity.form.StudentCreateForm;
 import org.gym.entity.form.StudentUpdateForm;
+import org.gym.handler.StudentNotFoundException;
 import org.gym.repository.StudentsRepository;
 import org.gym.service.IStudentService;
 
@@ -30,8 +31,10 @@ public class StudentService implements IStudentService {
 	}
 
 	@Override
-	public Student get(Long id) {
-		return repository.findById(id).get();
+	public Student get(Long id) throws StudentNotFoundException {
+		return repository.findById(id)
+			.orElseThrow(
+				() -> new StudentNotFoundException(id));
 	}
 
 	@Override
@@ -41,14 +44,18 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public List<PhysicalAvaliation> getAllAvaliationByStudentId(
-			Long id) {
-		Student student = repository.findById(id).get();
+			Long id) throws StudentNotFoundException {
+		Student student = repository.findById(id)
+			.orElseThrow(() -> new StudentNotFoundException(id));
 		return student.getAvaliations();
 	}
 
 	@Override
-	public Student update(Long id, StudentUpdateForm form) {
-		Student student = repository.findById(id).get();
+	public Student update(Long id, StudentUpdateForm form)
+		  throws StudentNotFoundException {
+		Student student = repository.findById(id)
+			.orElseThrow(
+				() -> new StudentNotFoundException(id));
 		student.setId(id);
 		student.setName(form.getName());
 		student.setBirthDate(form.getBirthDate());
@@ -57,7 +64,9 @@ public class StudentService implements IStudentService {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(Long id) throws StudentNotFoundException {
+		repository.findById(id).orElseThrow(
+				() -> new StudentNotFoundException(id));
 		repository.deleteById(id);
 	}
 }

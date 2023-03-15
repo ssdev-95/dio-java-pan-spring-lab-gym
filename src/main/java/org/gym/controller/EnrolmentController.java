@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.gym.entity.Enrolment;
 import org.gym.entity.form.EnrolmentForm;
+import org.gym.handler.StudentNotFoundException;
 import org.gym.service.impl.EnrolmentService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,13 +36,24 @@ public class EnrolmentController {
 	}
 
 	@GetMapping("/{id}")
-	public Enrolment get(@RequestParam Long id) {
-		return service.get(id);
+	public ResponseEntity<Object> get(@RequestParam Long id) {
+		try {
+			return ResponseEntity.ok(service.get(id));
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 
 	@DeleteMapping("/{id}")
-	public void delete(@RequestParam Long id) {
-		service.delete(id);
+	public ResponseEntity<Object> delete(@RequestParam Long id) {
+		try {
+			service.delete(id);
+			return ResponseEntity.ok(null);
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

@@ -6,7 +6,10 @@ import org.gym.entity.PhysicalAvaliation;
 import org.gym.entity.Student;
 import org.gym.entity.form.StudentCreateForm;
 import org.gym.entity.form.StudentUpdateForm;
+import org.gym.handler.StudentNotFoundException;
 import org.gym.service.impl.StudentService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,24 +39,47 @@ public class StudentController {
 	}
 
 	@GetMapping("/{id}")
-	public Student get(@RequestParam Long id) {
-		return service.get(id);
+	public ResponseEntity<Object> get(@RequestParam Long id) {
+		try {
+			return ResponseEntity.ok(service.get(id));
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/{id}/avaliations")
-	public List<PhysicalAvaliation> getAllAvaliationByStudentId(
+	public ResponseEntity<Object> getAllAvaliationByStudentId(
 			@RequestParam Long id) {
-		return service.getAllAvaliationByStudentId(id);
+		try {
+			List<PhysicalAvaliation> avaliations = service
+				.getAllAvaliationByStudentId(id);
+			return ResponseEntity.ok(avaliations);
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@PatchMapping()
-	public Student update(
+	public ResponseEntity<Object> update(
 			@RequestParam Long id, @RequestBody StudentUpdateForm form) {
-		return service.update(id, form);
+		try {
+			return ResponseEntity.ok(service.update(id, form));
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@RequestParam Long id) {
-		service.delete(id);
+	public ResponseEntity<Object> delete(@RequestParam Long id) {
+		try {
+			service.delete(id);
+			return ResponseEntity.ok(null);
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 }
