@@ -1,6 +1,7 @@
 package org.gym.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.gym.entity.PhysicalAvaliation;
 import org.gym.entity.Student;
@@ -32,9 +33,13 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public Student get(Long id) throws StudentNotFoundException {
-		return repository.findById(id)
-			.orElseThrow(
-				() -> new StudentNotFoundException(id));
+		Optional<Student> student = repository.findById(id);
+
+		if(!student.isPresent()) {
+			throw new StudentNotFoundException(id);
+		}
+
+		return student.get();
 	}
 
 	@Override
