@@ -17,12 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import org.mockito.Mock;
+//import org.mockito.Mock;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.mockito.InjectMocks;
 
 @TestInstance( value = Lifecycle.PER_CLASS)
 public class StudentServiceTests {
-	@Mock
+	@MockBean
 	private static StudentsRepository repository;
 	@InjectMocks
 	private static StudentService service;
@@ -39,7 +40,7 @@ public class StudentServiceTests {
 	}
 
 	@Test
-	void shouldCreateAStudent() {
+	void ShouldCreateAStudent() {
 		LocalDate dateBirth = LocalDate.parse("2023-08-18");
 		StudentCreateForm form = new StudentCreateForm(
 				"Saloma", "Long Island", 28472818273473l, dateBirth);

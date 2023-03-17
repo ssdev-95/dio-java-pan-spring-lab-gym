@@ -10,7 +10,7 @@ import org.gym.entity.form.StudentUpdateForm;
 import org.gym.handler.StudentNotFoundException;
 import org.gym.repository.StudentsRepository;
 import org.gym.service.IStudentService;
-
+import org.springframework.data.util.Optionals;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,17 +50,23 @@ public class StudentService implements IStudentService {
 	@Override
 	public List<PhysicalAvaliation> getAllAvaliationByStudentId(
 			Long id) throws StudentNotFoundException {
-		Student student = repository.findById(id)
-			.orElseThrow(() -> new StudentNotFoundException(id));
-		return student.getAvaliations();
+		Optional<Student> student = repository.findById(id);
+		
+		if(!student.isPresent())
+			throw new StudentNotFoundException(id);
+
+		return student.get().getAvaliations();
 	}
 
 	@Override
 	public Student update(Long id, StudentUpdateForm form)
-		  throws StudentNotFoundException {
-		Student student = repository.findById(id)
-			.orElseThrow(
-				() -> new StudentNotFoundException(id));
+  	  throws StudentNotFoundException {
+		Optional<Student> optional = repository.findById(id);
+
+		if(!optional.isPresent())
+			throw new StudentNotFoundException(id);
+
+		Student student = optional.get();
 		student.setId(id);
 		student.setName(form.getName());
 		student.setBirthDate(form.getBirthDate());
@@ -70,8 +76,11 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public void delete(Long id) throws StudentNotFoundException {
-		repository.findById(id).orElseThrow(
-				() -> new StudentNotFoundException(id));
+		Optional<Student> student = repository.findById(id);
+
+		if(!student.isPresent())
+			throw new StudentNotFoundException(id);
+
 		repository.deleteById(id);
 	}
 }

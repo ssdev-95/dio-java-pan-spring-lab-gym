@@ -6,6 +6,7 @@ import org.gym.entity.PhysicalAvaliation;
 import org.gym.entity.form.PhysicalAvaliationForm;
 import org.gym.entity.form.PhysicalAvaliationUpdateForm;
 import org.gym.handler.PhysicalAvaliationNotFoundException;
+import org.gym.handler.StudentNotFoundException;
 import org.gym.service.impl.PhysicalAvaliationService;
 
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,14 @@ public class PhysicalAvaliationController {
 	}
 
 	@PostMapping
-	public PhysicalAvaliation avaliate(
+	public ResponseEntity<Object> avaliate(
 			PhysicalAvaliationForm form) {
-		return service.create(form);
+		try {
+		  return ResponseEntity.ok(service.create(form));
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping
@@ -50,10 +56,15 @@ public class PhysicalAvaliationController {
 	}
 
 	@PatchMapping("/{id}")
-	public PhysicalAvaliation update(
+	public ResponseEntity<Object> update(
 			@RequestParam Long id,
 			@RequestBody PhysicalAvaliationUpdateForm form) {
-		return service.update(id, form);
+		try {
+		  return ResponseEntity.ok(service.update(id, form));
+		} catch(PhysicalAvaliationNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@DeleteMapping("/{id}")

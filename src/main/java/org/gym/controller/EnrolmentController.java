@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gym.entity.Enrolment;
 import org.gym.entity.form.EnrolmentForm;
+import org.gym.handler.EnrolmentNotFoundException;
 import org.gym.handler.StudentNotFoundException;
 import org.gym.service.impl.EnrolmentService;
 
@@ -26,8 +27,14 @@ public class EnrolmentController {
 	}
 
 	@PostMapping
-	public Enrolment enrol(@RequestBody EnrolmentForm form) {
-		return this.service.create(form);
+	public ResponseEntity<Object> enrol(
+			@RequestBody EnrolmentForm form) {
+		try {
+			return ResponseEntity.ok(service.create(form));
+		} catch(StudentNotFoundException e) {
+			System.out.println(e);
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/{neighbor}")
@@ -39,19 +46,18 @@ public class EnrolmentController {
 	public ResponseEntity<Object> get(@RequestParam Long id) {
 		try {
 			return ResponseEntity.ok(service.get(id));
-		} catch(StudentNotFoundException e) {
+		} catch(EnrolmentNotFoundException e) {
 			System.out.println(e);
 			return ResponseEntity.notFound().build();
 		}
 	}
-
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> delete(@RequestParam Long id) {
 		try {
 			service.delete(id);
 			return ResponseEntity.ok(null);
-		} catch(StudentNotFoundException e) {
+		} catch(EnrolmentNotFoundException e) {
 			System.out.println(e);
 			return ResponseEntity.notFound().build();
 		}
